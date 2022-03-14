@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'Spot Mono';
+  src: url('/fonts/SpotMono-Regular.eot');
+  src: url('/fonts/SpotMono-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/SpotMono-Regular.woff2') format('woff2'),
+    url('/fonts/SpotMono-Regular.woff') format('woff'),
+    url('/fonts/SpotMono-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
