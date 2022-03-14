@@ -47,7 +47,7 @@ const ContentWrapper = styled(Col)`
 `;
 
 const Video = styled.video`
-  width: 100%;
+  width: 80%;
 
   @media (max-width: 1920px) {
     width: 120%;
