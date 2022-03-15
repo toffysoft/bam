@@ -2,70 +2,34 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-const NavContainer = styled.div`
-  top: -1rem;
-  left: 0px;
-  right: 0px;
-  z-index: 9;
-  padding-top: 1rem;
-  position: fixed;
-  transition: 250ms ease-in-out box-shadow;
-`;
-
-const Nav = styled.div`
-  position: relative;
-  display: flex;
-  margin: 2rem;
-  margin-top: 3rem;
-  z-index: 2;
-  justify-content: space-between;
-`;
-
-const NavContent = styled.div`
-  max-width: 100%;
-  display: flex;
-`;
-
-const NavItem = styled.div`
-  display: flex;
-  max-width: 100%;
-  position: relative;
-  grid-gap: 1rem;
-  gap: 1rem;
-  align-items: center;
-`;
-
-const Img = styled.img`
-  width: ${({ width }) => width ?? '10vw'};
-`;
-
 const NavBar = () => {
   return (
-    <NavContainer className="nav_container">
-      <Nav className="nav">
-        <NavContent className="nav_content">
-          <NavItem className="nav_item">
-            <Img alt="logo" src="/images/logo.png" />
-          </NavItem>
-        </NavContent>
-        <NavContent className="nav_content">
-          <NavItem style={{ marginRight: '3rem' }} className="nav_item">
+    <header className="d-flex flex-wrap align-items-center justify-content-between justify-content-md-between mt-3">
+      <a
+        href="/"
+        className="d-flex align-items-center col-md-3 mb-md-0 text-decoration-none heading active nav-link"
+      >
+        <img className="logo" alt="BAMfers" src="/images/logo.png" />
+      </a>
+      <div className="nav">
+        <div className="text-end">
+          <div className="social-icons col-sm-3 col-4">
             <a
               href="https://twitter.com/xxxMfers"
               target="_blank"
               rel="noreferrer"
             >
-              <Img width="4vw" alt="twitter" src="/images/twitter.png" />
+              <img alt="twitter" src="/images/twitter.png" />
             </a>
-          </NavItem>
-          <NavItem className="nav_item">
-            <a href="#" target="_blank" rel="noreferrer">
-              <Img width="4vw" alt="opensea" src="/images/opensea.png" />
+          </div>
+          <div className="social-icons col-sm-3 col-4">
+            <a href="/" target="_blank" rel="noreferrer">
+              <img alt="opensea" src="/images/opensea.png" />
             </a>
-          </NavItem>
-        </NavContent>
-      </Nav>
-    </NavContainer>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
 

@@ -47,10 +47,15 @@ const ContentWrapper = styled(Col)`
 `;
 
 const Video = styled.video`
-  width: 80%;
+  width: 90%;
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+  clear: both;
 
-  @media (max-width: 1920px) {
-    width: 120%;
+  @media (max-width: 768px) {
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 
@@ -85,20 +90,21 @@ const ContentContainer = styled.div`
   background-size: 100% 100%;
   background-repeat: no-repeat;
 
-  width: 65%;
+  width: 50%;
   height: 50%;
 
   @media (max-width: 1920px) {
-    width: 80%;
+    width: 60%;
     height: 60%;
   }
 
   @media (max-width: 1024px) {
-    width: 65%;
+    width: 50%;
     height: 50%;
   }
 
   @media (max-width: 425px) {
+    width: 30%;
     height: 30%;
   }
 `;
@@ -125,7 +131,7 @@ const Title = styled.span`
 
 const Desc = styled.span`
   color: #464270;
-  font-size: 3vmin;
+  font-size: 1.2rem;
   margin: 0;
   font-weight: 100;
   margin: 1vmin;
@@ -136,7 +142,7 @@ const Desc = styled.span`
 `;
 
 const Button = styled.button`
-  width: 341px;
+  /* width: 341px;
   background-color: #464270;
   color: #fff;
   cursor: pointer;
@@ -148,7 +154,20 @@ const Button = styled.button`
   }
   @media (max-width: 425px) {
     width: 170px;
-  }
+  } */
+
+  background-color: #464270;
+  border: none;
+  color: #fff !important;
+  padding: 0.7rem 2rem;
+  letter-spacing: 2px;
+  border-radius: 0;
+  font-family: Spot Mono;
+  font-weight: 600;
+  font-size: 2rem;
+  margin-top: 10px;
+  text-decoration: none;
+  display: inline-block;
 `;
 
 const BigTitle = styled.h1`
@@ -455,7 +474,78 @@ export default function BAM() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container>
+      <main>
+        <div>
+          <div className="container">
+            <NavBar />
+          </div>
+          <div className="main container">
+            <div className="row">
+              <div className="col-12">
+                <img
+                  className="homePageImg_PC"
+                  src="/images/main-bg.png"
+                  alt="BAMfers"
+                />
+                <h2 className="mt-3 text-center">Bored Azuki mfers</h2>
+                <p className="text-center">
+                  <Button onClick={onOpen}>Mint</Button>
+                </p>
+                <p className="text-center">
+                  <Desc>Price 0.01 ETH</Desc>
+                </p>
+                {/* <video
+                  autoPlay="autoplay"
+                  loop="loop"
+                  muted="muted"
+                  className="homePageImg_PC"
+                >
+                  <source
+                    src="https://www.bzuki.io/assets/icon/bzuki/home.mp4"
+                    type="video/mp4"
+                  />
+                </video> */}
+              </div>
+            </div>
+            <div className="divider div-transparent"></div>
+          </div>
+          <div className="utility container">
+            <div className="row">
+              <div className="col-md-6 col-12 order-md-1 order-2">
+                <h2>BAM!</h2>
+                <h4>Bored Azuki mfers</h4>
+                <p>
+                  The collection is based on the Ethereum blockchain and
+                  includes 3,333 Bored Azuki mfers with 201 traits.
+                </p>
+                <h4>We are the BAM!</h4>
+                <p>
+                  No official discord. No roadmap. No drama. Just mfing vibes!
+                  Like Sartoshi said, “there is no king, ruler, or defined
+                  roadmap and mfers can build whatever they can think of with
+                  these mfers”.
+                </p>
+                <p>
+                  <Button onClick={onOpen}>Mint</Button>
+                </p>
+                <p>
+                  <Desc>Price 0.01 ETH</Desc>
+                </p>
+              </div>
+              <div className="demo col-md-6 col-12 order-md-2 order-1">
+                {/* <img alt="twitter" src="mfergirls.gif" /> */}
+                <Video autoPlay loop muted>
+                  <source src="/bamfers.mp4" type="video/mp4" />
+                </Video>
+              </div>
+            </div>
+          </div>
+          <div className="divider div-transparent margin-bottom"></div>
+
+          <div className="divider div-transparent margin-bottom"></div>
+        </div>
+      </main>
+      {/* <Container>
         <Main>
           <NavBar />
           <ContentContainer></ContentContainer>
@@ -467,20 +557,6 @@ export default function BAM() {
         <Section id="about">
           <ContentRow gutter={[48, 48]}>
             <ContentWrapper lg={14} xl={14}>
-              {/* 
-              <Paragraph>
-                Each player needs a minimum of 1 Chibi to join the game for
-                rewards.
-              </Paragraph>
-              <Paragraph>
-                Every character is created by a random algorithm which ensures
-                that each character is unique and differentiated from the
-                others.
-              </Paragraph>
-              <Paragraph>
-                Some Chibi possesses very rare traits that will set them apart
-                from the rest of the bunch.
-              </Paragraph> */}
               <BigTitle>BAM!</BigTitle>
               <SubTitle>Bored Azuki mfers</SubTitle>
               <Paragraph>
@@ -508,7 +584,7 @@ export default function BAM() {
             </ContentWrapper>
           </ContentRow>
         </Section>
-      </Container>
+      </Container> */}
     </>
   );
 }

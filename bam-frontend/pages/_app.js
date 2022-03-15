@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 

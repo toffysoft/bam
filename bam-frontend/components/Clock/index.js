@@ -14,7 +14,7 @@ const Form = styled.div`
 
 const FormBody = styled.div`
   text-align: center;
-  max-width: 330px;
+  max-width: 350px;
 `;
 
 const Btn = styled.button`
@@ -31,7 +31,7 @@ const Btn = styled.button`
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.1s;
-  min-width: 330px;
+  min-width: 350px;
 `;
 
 const Clock = ({ d, h, m, s }) => {
