@@ -531,9 +531,9 @@ export default function BAM() {
               </div>
               <div className="demo col-md-6 col-12 order-md-2 order-1">
                 {/* <img alt="twitter" src="mfergirls.gif" /> */}
-                <video autoPlay loop muted>
+                <Video autoPlay loop muted>
                   <source src="/bamfers.mp4" type="video/mp4" />
-                </video>
+                </Video>
               </div>
             </div>
           </div>
