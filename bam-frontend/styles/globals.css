@@ -104,7 +104,8 @@ body .chicks .mint-button-a:hover {
 }
 
 .logo {
-  width: 150px;
+  /* width: 150px; */
+  width: 80px;
   display: block;
   margin-left: 0;
   margin-right: auto;
@@ -411,6 +412,7 @@ header a {
 footer {
   margin-top: 1rem;
   margin-bottom: 2rem;
+  padding-bottom: 2rem;
 }
 
 .social-icons {
@@ -418,7 +420,8 @@ footer {
 }
 
 .social-icons img {
-  width: 60px;
+  /* width: 60px; */
+  width: 30px;
 }
 
 .social-icons img:hover {

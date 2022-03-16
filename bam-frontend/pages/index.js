@@ -482,11 +482,19 @@ export default function BAM() {
           <div className="main container">
             <div className="row">
               <div className="col-12">
-                <img
+                {/* <img
                   className="homePageImg_PC"
                   src="/images/main-bg.png"
                   alt="BAMfers"
-                />
+                /> */}
+                <video
+                  autoPlay="autoplay"
+                  loop="loop"
+                  muted="muted"
+                  className="homePageImg_PC"
+                >
+                  <source src="bam.webm" type="video/webm" />
+                </video>
                 <h2 className="mt-3 text-center">Bored Azuki mfers</h2>
                 <p className="text-center">
                   <Button onClick={onOpen}>Mint</Button>
@@ -494,17 +502,6 @@ export default function BAM() {
                 <p className="text-center">
                   <Desc>Price 0.01 ETH</Desc>
                 </p>
-                {/* <video
-                  autoPlay="autoplay"
-                  loop="loop"
-                  muted="muted"
-                  className="homePageImg_PC"
-                >
-                  <source
-                    src="https://www.bzuki.io/assets/icon/bzuki/home.mp4"
-                    type="video/mp4"
-                  />
-                </video> */}
               </div>
             </div>
             <div className="divider div-transparent"></div>
@@ -542,9 +539,31 @@ export default function BAM() {
           </div>
           <div className="divider div-transparent margin-bottom"></div>
 
-          <div className="divider div-transparent margin-bottom"></div>
+          {/* <div className="divider div-transparent margin-bottom"></div> */}
         </div>
       </main>
+      <footer className="text-center text-capitalize">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-3 col-2"></div>
+            <div className="social-icons col-sm-3 col-4">
+              <a
+                href="https://twitter.com/xxxMfers"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img alt="twitter" src="/images/twitter.png" />
+              </a>
+            </div>
+            <div className="social-icons col-sm-3 col-4">
+              <a href="/" target="_blank" rel="noreferrer">
+                <img alt="opensea" src="/images/opensea.png" />
+              </a>
+            </div>
+            <div className="col-sm-3 col-2"></div>
+          </div>
+        </div>
+      </footer>
       {/* <Container>
         <Main>
           <NavBar />
