@@ -224,6 +224,7 @@ function getProviderOptions() {
         rpc: {
           1: `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
           4: `https://rinkeby.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+          1337: `http://127.0.0.1:8545`,
         },
       },
     },

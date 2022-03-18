@@ -37,3 +37,10 @@ yarn-error.log*
 **/.design/
 **/layers/
 !**/layers/.gitkeep
+
+bam-contract/assets/
+**/types/
+**/bindings/
+**/abigenBindings/
+**/test/
+.secret
