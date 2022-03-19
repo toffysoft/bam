@@ -83,32 +83,64 @@ async function main() {
     }
 
     await Promise.all(
-      metadata.map((m) => {
-        const splitUrl = _.split(m.external_url, '/');
+      metadata.map(async (m) => {
+        const splitUrl = _.split(m.name, '#');
         const tokenID = splitUrl[splitUrl.length - 1];
 
-        return rateLimiter.schedule(async () => {
-          const imageHash = await uploadFile(
-            getFileName(`assets/images/${tokenID}.png`),
-            `assets/images/${tokenID}.png`,
-          );
-          m.image = `ipfs://${imageHash}`;
+        // const imageHash = await uploadFile(
+        //   getFileName(`assets/images/${tokenID}.png`),
+        //   `assets/images/${tokenID}.png`,
+        // );
+        // m.image = `ipfs://${imageHash}`;
 
-          console.log(`upload image ${tokenID}.png => ${m.image}`);
+        // console.log(`upload image ${tokenID}.png => ${m.image}`);
+        // console.log({ splitUrl });
+        let fileName = `${tokenID}.png`;
+        let exists = fs.existsSync(`assets/images/${fileName}`);
+        // console.log({ fileName, exists });
 
-          if (!_.isNil(m.animation_url)) {
-            const animationHash = await uploadFile(
-              getFileName(`assets/animation/${tokenID}.mp4`),
-              `assets/animation/${tokenID}.mp4`,
-            );
+        if (!exists) {
+          fileName = `${tokenID}.gif`;
+        }
 
-            m.animation_url = `ipfs://${animationHash}`;
+        // const file = fs.readFileSync(fileName);
 
-            console.log(`upload video ${tokenID}.mp4 => ${m.animation_url}`);
-          }
+        // console.log({ file });
+        m.image = `https://testnet.bamfers.club/testnet-bamfers/images/${fileName}`;
+        if (!_.isNil(m.animation_url)) {
+          // const animationHash = await uploadFile(
+          //   getFileName(`assets/animation/${tokenID}.mp4`),
+          //   `assets/animation/${tokenID}.mp4`,
+          // );
+          // m.animation_url = `ipfs://${animationHash}`;
+          m.animation_url = `https://testnet.bamfers.club/testnet-bamfers/images/${fileName}`;
+          // console.log(`upload video ${tokenID}.mp4 => ${m.animation_url}`);
+        }
 
-          fs.outputJsonSync(`assets/metadata/${tokenID}`, m);
-        });
+        fs.outputJsonSync(`assets/metadata/${tokenID}`, m);
+
+        // return rateLimiter.schedule(async () => {
+        //   // const imageHash = await uploadFile(
+        //   //   getFileName(`assets/images/${tokenID}.png`),
+        //   //   `assets/images/${tokenID}.png`,
+        //   // );
+        //   // m.image = `ipfs://${imageHash}`;
+
+        //   console.log(`upload image ${tokenID}.png => ${m.image}`);
+
+        //   if (!_.isNil(m.animation_url)) {
+        //     // const animationHash = await uploadFile(
+        //     //   getFileName(`assets/animation/${tokenID}.mp4`),
+        //     //   `assets/animation/${tokenID}.mp4`,
+        //     // );
+
+        //     // m.animation_url = `ipfs://${animationHash}`;
+
+        //     console.log(`upload video ${tokenID}.mp4 => ${m.animation_url}`);
+        //   }
+
+        //   // fs.outputJsonSync(`assets/metadata/${tokenID}`, m);
+        // });
       }),
     );
 

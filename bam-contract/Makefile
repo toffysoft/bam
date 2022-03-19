@@ -23,7 +23,7 @@ test-js:
 	yarn run jest --testTimeout=600000
 
 ganache:
-	ganache-cli --mnemonic "${SEED_GANACHE}"
+	ganache-cli --mnemonic "${SEED_GANACHE}" --debug
 
 gen-pass:
 	date +%s | sha256sum | base64 | head -c 32 ; echo
@@ -64,3 +64,9 @@ migrate-rinkeby-dry:
 
 migrate-mainnet-dry:
 	truffle migreate --network mainnet --reset --dry-run
+
+verify-rinkeby:
+	truffle run verify BAMfers --network rinkeby
+
+verify-mainnet:
+	truffle run verify BAMfers --network mainnet

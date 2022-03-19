@@ -60,6 +60,7 @@ module.exports = {
         );
       },
       network_id: 4,
+      gasPrice: 44000000000,
     },
     mainnet: {
       provider: function () {

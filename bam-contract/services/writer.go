@@ -46,17 +46,27 @@ func (svc *Writer) Write() error {
 	}
 	utils.Print("TotalSupply = %s", totalSupply)
 
-	// baseURI, err := bamContract.BaseURI(&bind.CallOpts{})
-	// if err != nil {
-	// 	return utils.LogE(err)
-	// }
-	// utils.Print("BaseURI = %s", baseURI)
-
-	_, err = bamContract.Mint(utils.MySendOpt(client, network), big.NewInt(0))
+	cost, err := bamContract.BAMFERSPRICE(&bind.CallOpts{})
 	if err != nil {
 		return utils.LogE(err)
 	}
-	// // utils.Print("Mint = %s", r)
+	utils.Print("Cost = %s", cost)
+
+	_, err = bamContract.Mint(utils.MySendOptWithValue(utils.MySendOpt(client, network), cost), big.NewInt(1))
+	if err != nil {
+		return utils.LogE(err)
+	}
+
+	totalSupply, err = bamContract.TotalSupply(&bind.CallOpts{})
+	if err != nil {
+		return utils.LogE(err)
+	}
+	utils.Print("TotalSupply = %s", totalSupply)
+
+	_, err = bamContract.FreeMint(utils.MySendOpt(client, network), big.NewInt(0))
+	if err != nil {
+		return utils.LogE(err)
+	}
 
 	return nil
 }

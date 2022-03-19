@@ -206,6 +206,7 @@ const addText = (_sig, x, y, size) => {
 const drawElement = (_renderObject, _index, _layersLen) => {
   ctx.globalAlpha = _renderObject.layer.opacity;
   ctx.globalCompositeOperation = _renderObject.layer.blend;
+
   text.only
     ? addText(
         `${_renderObject.layer.name}${text.spacer}${_renderObject.layer.selectedElement.name}`,
@@ -447,6 +448,8 @@ const startCreating = async () => {
         editionCount === three
       ) {
         console.log({ one });
+        console.log({ two });
+        console.log({ three });
         attributesList.push({
           trait_type: '1/1',
           value: editionCount,

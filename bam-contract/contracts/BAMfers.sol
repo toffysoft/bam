@@ -15,7 +15,8 @@ error SaleIsNotActive();
 error TheCallerIsAnotherContract();
 
 contract BAMfers is ERC721A, Ownable, ReentrancyGuard {
-    string public constant PROVENANCE = "PROVENANCE";
+    string public constant PROVENANCE =
+        "e02c8a9f4c13337633881ceba01ace9552a1ba01d8c45c38f0f4f8603a744eff";
     uint256 public constant MAX_PURCHASE_PER_TX = 20;
     uint256 public constant MAX_BAMFERS = 3333;
     uint256 public constant BAMFERS_PRICE = 0.01 ether;
