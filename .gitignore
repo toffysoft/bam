@@ -26,7 +26,10 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
+.env
 .env.local
+.env.dev
+.env.prod
 .env.development.local
 .env.test.local
 .env.production.local
@@ -44,3 +47,4 @@ bam-contract/assets/
 **/abigenBindings/
 **/test/
 .secret
+.secret.testnet
