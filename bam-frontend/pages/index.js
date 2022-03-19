@@ -774,46 +774,6 @@ export default function BAM() {
           </div>
         </div>
       </footer>
-      {/* <Container>
-        <Main>
-          <NavBar />
-          <ContentContainer></ContentContainer>
-          <Title>Bored Azuki mfers</Title>
-          <Button onClick={onOpen}>Mint</Button>
-          <Desc>Price 0.01 ETH</Desc>
-        </Main>
-
-        <Section id="about">
-          <ContentRow gutter={[48, 48]}>
-            <ContentWrapper lg={14} xl={14}>
-              <BigTitle>BAM!</BigTitle>
-              <SubTitle>Bored Azuki mfers</SubTitle>
-              <Paragraph>
-                The collection is based on the Ethereum blockchain and includes
-                3,333 Bored Azuki mfers with 201 traits.
-              </Paragraph>
-              <SubTitle>We are the BAM!</SubTitle>
-              <Paragraph>
-                No official discord. No roadmap. No drama. Just mfing vibes!
-                Like Sartoshi said, “there is no king, ruler, or defined roadmap
-                and mfers can build whatever they can think of with these
-                mfers”.
-              </Paragraph>
-              <Button onClick={onOpen}>Mint</Button>
-              <Desc>Price 0.01 ETH</Desc>
-            </ContentWrapper>
-            <ContentWrapper
-              style={{ justifyContent: 'flex-start', paddingTop: '50px' }}
-              lg={8}
-              xl={8}
-            >
-              <Video autoPlay loop muted>
-                <source src="/bamfers.mp4" type="video/mp4" />
-              </Video>
-            </ContentWrapper>
-          </ContentRow>
-        </Section>
-      </Container> */}
     </>
   );
 }
