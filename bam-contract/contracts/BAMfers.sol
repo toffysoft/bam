@@ -70,7 +70,6 @@ contract BAMfers is ERC721A, Ownable, ReentrancyGuard {
 
     function freeMint(uint256 quantity)
         public
-        payable
         callerIsUser
         nonReentrant
         mintCompliance(quantity)
@@ -89,7 +88,7 @@ contract BAMfers is ERC721A, Ownable, ReentrancyGuard {
         _uriPrefix = newBaseUri;
     }
 
-    function changeSaleState() external payable onlyOwner {
+    function changeSaleState() external onlyOwner {
         saleIsActive = !saleIsActive;
     }
 
