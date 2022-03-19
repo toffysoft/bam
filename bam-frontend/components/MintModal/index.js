@@ -184,10 +184,13 @@ const MintModal = ({
   claimable,
   onClaim = () => {},
   onMint = () => {},
+  onMinted = () => {},
   minting,
   maxSupply,
   isMinted,
   setIsMinted,
+  freeMintReserve,
+  maxFreeMintReserve,
 }) => {
   const [cur, setCur] = useState(2);
   const [selectMint, setSelectMint] = useState(false);
@@ -196,6 +199,7 @@ const MintModal = ({
   const intervalRef = useRef(null);
 
   const handleClose = () => {
+    if (minting) return;
     setSelectMint(false);
     onClose();
   };
@@ -205,6 +209,7 @@ const MintModal = ({
   useOnClickOutside(wrapperRef, handleClose);
 
   const handleClickQuantityItem = (n) => () => {
+    if (minting) return;
     setAmount(n);
     setCur(n);
   };
@@ -279,10 +284,7 @@ const MintModal = ({
         <>
           <Form>
             <FormBody>
-              <PurchaseBtn
-                onClick={() => setIsMinted(false)}
-                style={{ minWidth: '250px' }}
-              >
+              <PurchaseBtn onClick={onMinted} style={{ minWidth: '250px' }}>
                 Continue Minting
               </PurchaseBtn>
             </FormBody>
@@ -294,6 +296,7 @@ const MintModal = ({
     if (claimable && !selectMint) {
       return (
         <>
+          {/* <H3>{`${freeMintReserve.toLocaleString()}/${maxFreeMintReserve.toLocaleString()}`}</H3> */}
           <H3>{`${totalSupply.toLocaleString()}/${maxSupply.toLocaleString()}`}</H3>
           {minting ? (
             <Spin
@@ -323,7 +326,7 @@ const MintModal = ({
 
     return (
       <>
-        <H3>{`${totalSupply.toLocaleString()}/${maxSupply.toLocaleString()}`}</H3>
+        <H5>{`Minted ${totalSupply.toLocaleString()}/${maxSupply.toLocaleString()}`}</H5>
         <div style={{ textAlign: 'center' }}>{`${web3.utils.fromWei(
           _.toString(price),
           'ether',
@@ -332,6 +335,7 @@ const MintModal = ({
           <FormBody>
             <Quantity>
               <QuantityItem
+                disabled={minting}
                 active={
                   _.toSafeInteger(amount) === 1 && _.toSafeInteger(cur) === 1
                 }
@@ -340,6 +344,7 @@ const MintModal = ({
                 1
               </QuantityItem>
               <QuantityItem
+                disabled={minting}
                 active={
                   _.toSafeInteger(amount) === 2 && _.toSafeInteger(cur) === 2
                 }
@@ -348,6 +353,7 @@ const MintModal = ({
                 2
               </QuantityItem>
               <QuantityItem
+                disabled={minting}
                 active={
                   _.toSafeInteger(amount) === 5 && _.toSafeInteger(cur) === 5
                 }
@@ -356,6 +362,7 @@ const MintModal = ({
                 5
               </QuantityItem>
               <QuantityItem
+                disabled={minting}
                 active={
                   _.toSafeInteger(amount) === 10 && _.toSafeInteger(cur) === 10
                 }
@@ -366,6 +373,7 @@ const MintModal = ({
             </Quantity>
             <InputWrapper>
               <Input
+                disabled={minting}
                 type="text"
                 min="1"
                 max="20"
@@ -384,13 +392,32 @@ const MintModal = ({
                 indicator={antIconSm}
               />
             ) : (
-              <PurchaseBtn onClick={onMint}>Purchase</PurchaseBtn>
+              <>
+                <PurchaseBtn onClick={onMint}>
+                  {freeMintReserve !== 0 ? 'Mint' : 'Purchase'}
+                </PurchaseBtn>
+                {freeMintReserve !== 0 && (
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      marginTop: '5px',
+                      color: 'red',
+                    }}
+                  >{`Free Mint Reserve ${freeMintReserve.toLocaleString()}/${maxFreeMintReserve.toLocaleString()}`}</div>
+                )}
+              </>
             )}
           </FormBody>
         </Form>
       </>
     );
   };
+
+  useEffect(() => {
+    if (open) {
+      setCur(amount);
+    }
+  }, [open]);
 
   return (
     <BaseModal open={open}>
@@ -414,7 +441,7 @@ const MintModal = ({
             </Svg>
           </Close>
 
-          <H1>
+          <H1 style={{ marginTop: '20px', marginBottom: '20px' }}>
             <b>Mint BAMfers</b>
           </H1>
           {renderForm()}

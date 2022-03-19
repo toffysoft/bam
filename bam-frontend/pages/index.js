@@ -8,7 +8,7 @@ import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3 from 'web3';
 import NavBar from '../components/NavBar';
-
+import NFT from '../artifacts/contracts/BAMfers.json';
 import styled from 'styled-components';
 
 const MintModal = dynamic(() => import('../components/MintModal'), {
@@ -199,6 +199,8 @@ const openNotification = (title, message) => {
   });
 };
 
+let Errors = {};
+
 function initWeb3(provider) {
   const web3 = new Web3(provider);
 
@@ -211,6 +213,100 @@ function initWeb3(provider) {
       },
     ],
   });
+
+  const QuantityToMintTooHigh = web3.eth.abi.encodeFunctionSignature(
+    'QuantityToMintTooHigh()',
+  );
+  const MaxSupplyExceeded = web3.eth.abi.encodeFunctionSignature(
+    'MaxSupplyExceeded()',
+  );
+  const FreeMintReserveExceeded = web3.eth.abi.encodeFunctionSignature(
+    'FreeMintReserveExceeded()',
+  );
+  const InsufficientFunds = web3.eth.abi.encodeFunctionSignature(
+    'InsufficientFunds()',
+  );
+  const SaleIsNotActive =
+    web3.eth.abi.encodeFunctionSignature('SaleIsNotActive()');
+  const ApprovalQueryForNonexistentToken = web3.eth.abi.encodeFunctionSignature(
+    'ApprovalQueryForNonexistentToken()',
+  );
+  const ApproveToCaller =
+    web3.eth.abi.encodeFunctionSignature('ApproveToCaller()');
+  const ApprovalToCurrentOwner = web3.eth.abi.encodeFunctionSignature(
+    'ApprovalToCurrentOwner()',
+  );
+  const BalanceQueryForZeroAddress = web3.eth.abi.encodeFunctionSignature(
+    'BalanceQueryForZeroAddress()',
+  );
+  const MintedQueryForZeroAddress = web3.eth.abi.encodeFunctionSignature(
+    'MintedQueryForZeroAddress()',
+  );
+  const BurnedQueryForZeroAddress = web3.eth.abi.encodeFunctionSignature(
+    'BurnedQueryForZeroAddress()',
+  );
+  const AuxQueryForZeroAddress = web3.eth.abi.encodeFunctionSignature(
+    'AuxQueryForZeroAddress()',
+  );
+  const MintToZeroAddress = web3.eth.abi.encodeFunctionSignature(
+    'MintToZeroAddress()',
+  );
+  const MintZeroQuantity =
+    web3.eth.abi.encodeFunctionSignature('MintZeroQuantity()');
+  const OwnerIndexOutOfBounds = web3.eth.abi.encodeFunctionSignature(
+    'OwnerIndexOutOfBounds()',
+  );
+  const OwnerQueryForNonexistentToken = web3.eth.abi.encodeFunctionSignature(
+    'OwnerQueryForNonexistentToken()',
+  );
+  const TokenIndexOutOfBounds = web3.eth.abi.encodeFunctionSignature(
+    'TokenIndexOutOfBounds()',
+  );
+  const TransferCallerNotOwnerNorApproved =
+    web3.eth.abi.encodeFunctionSignature('TransferCallerNotOwnerNorApproved()');
+  const TransferFromIncorrectOwner = web3.eth.abi.encodeFunctionSignature(
+    'TransferFromIncorrectOwner()',
+  );
+  const TransferToNonERC721ReceiverImplementer =
+    web3.eth.abi.encodeFunctionSignature(
+      'TransferToNonERC721ReceiverImplementer()',
+    );
+  const TransferToZeroAddress = web3.eth.abi.encodeFunctionSignature(
+    'TransferToZeroAddress()',
+  );
+  const URIQueryForNonexistentToken = web3.eth.abi.encodeFunctionSignature(
+    'URIQueryForNonexistentToken()',
+  );
+  const TheCallerIsAnotherContract = web3.eth.abi.encodeFunctionSignature(
+    'TheCallerIsAnotherContract()',
+  );
+
+  Errors = {
+    [QuantityToMintTooHigh]: 'QuantityToMintTooHigh',
+    [MaxSupplyExceeded]: 'MaxSupplyExceeded',
+    [FreeMintReserveExceeded]: 'FreeMintReserveExceeded',
+    [InsufficientFunds]: 'InsufficientFunds',
+    [SaleIsNotActive]: 'SaleIsNotActive',
+    [ApprovalQueryForNonexistentToken]: 'ApprovalQueryForNonexistentToken',
+    [ApproveToCaller]: 'ApproveToCaller',
+    [ApprovalToCurrentOwner]: 'ApprovalToCurrentOwner',
+    [BalanceQueryForZeroAddress]: 'BalanceQueryForZeroAddress',
+    [MintedQueryForZeroAddress]: 'MintedQueryForZeroAddress',
+    [BurnedQueryForZeroAddress]: 'BurnedQueryForZeroAddress',
+    [AuxQueryForZeroAddress]: 'AuxQueryForZeroAddress',
+    [MintToZeroAddress]: 'MintToZeroAddress',
+    [MintZeroQuantity]: 'MintZeroQuantity',
+    [OwnerIndexOutOfBounds]: 'OwnerIndexOutOfBounds',
+    [OwnerQueryForNonexistentToken]: 'OwnerQueryForNonexistentToken',
+    [TokenIndexOutOfBounds]: 'TokenIndexOutOfBounds',
+    [TransferCallerNotOwnerNorApproved]: 'TransferCallerNotOwnerNorApproved',
+    [TransferFromIncorrectOwner]: 'TransferFromIncorrectOwner',
+    [TransferToNonERC721ReceiverImplementer]:
+      'TransferToNonERC721ReceiverImplementer',
+    [TransferToZeroAddress]: 'TransferToZeroAddress',
+    [URIQueryForNonexistentToken]: 'URIQueryForNonexistentToken',
+    [TheCallerIsAnotherContract]: 'TheCallerIsAnotherContract',
+  };
 
   return web3;
 }
@@ -240,6 +336,10 @@ if (typeof window !== 'undefined') {
     cacheProvider: true,
     // providerOptions: getProviderOptions(),
   });
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export default function BAM() {
@@ -274,9 +374,11 @@ export default function BAM() {
   const [toAddress, setToAddress] = React.useState('');
   const [sendToken, setSendToken] = React.useState('');
   const [amount, setAmount] = React.useState(2);
-  const [price, setPrice] = React.useState(10000000000000000);
+  const [price, setPrice] = React.useState('10000000000000000');
   const [isClaimable, setIsClaimable] = React.useState();
   const [totalSupply, setTotalSupply] = React.useState(0);
+  const [freeMintReserve, setFreeMintReserve] = React.useState(333);
+  const [maxFreeMintReserve, setMaxFreeMintReserve] = React.useState(333);
   const [maxSupply, setMaxSupply] = React.useState(3333);
   const [isMinted, setIsMinted] = React.useState(false);
 
@@ -318,22 +420,18 @@ export default function BAM() {
 
       const signer = web3Provider.getSigner();
 
-      // const nftContract = new ethers.Contract(
-      //   process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-      //   NFT.abi,
-      //   signer,
-      // );
+      const nftContract = new ethers.Contract(
+        process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+        NFT.abi,
+        signer,
+      );
 
-      // const totalSupply = await nftContract.totalSupply();
+      const totalSupply = await nftContract.totalSupply();
+      const freeMintReserve = await nftContract.freeMintReserve();
 
-      // const price = await nftContract.CHIBI_PRICE();
-      // const maxSupply = await nftContract.MAX_CHIBI();
-
-      // setMaxSupply(maxSupply.toNumber());
-
-      // setPrice(price.toNumber());
-      // setTotalSupply(totalSupply.toNumber());
-      // setNftContract(nftContract);
+      setTotalSupply(totalSupply.toNumber());
+      setFreeMintReserve(freeMintReserve.toNumber());
+      setNftContract(nftContract);
       setWeb3Provider(web3Provider);
       setSigner(signer);
       setWeb3(Web3);
@@ -382,7 +480,17 @@ export default function BAM() {
       setIsOwner(false);
       await web3Modal?.clearCachedProvider();
     } catch (e) {
-      openNotification(e?.code ?? 'Error', e?.error?.message ?? e?.message);
+      const originalError = e?.error?.data?.originalError;
+      let msg;
+
+      if (originalError) {
+        msg = Errors?.[originalError?.data] ?? originalError?.message;
+      }
+
+      openNotification(
+        e?.code ?? 'Error',
+        msg ?? e?.error?.message ?? e?.message,
+      );
     }
   };
 
@@ -392,7 +500,17 @@ export default function BAM() {
     } catch (e) {
       console.error({ e });
 
-      openNotification(e?.code ?? 'Error', e?.error?.message ?? e?.message);
+      const originalError = e?.error?.data?.originalError;
+      let msg;
+
+      if (originalError) {
+        msg = Errors?.[originalError?.data] ?? originalError?.message;
+      }
+
+      openNotification(
+        e?.code ?? 'Error',
+        msg ?? e?.error?.message ?? e?.message,
+      );
     }
   };
 
@@ -406,22 +524,112 @@ export default function BAM() {
     setConnecting(true);
     setShowModal(true);
     try {
-      // const totalSupply = await nftContract.totalSupply();
+      const totalSupply = await nftContract.totalSupply();
+      const freeMintReserve = await nftContract.freeMintReserve();
 
-      // const price = await nftContract.CHIBI_PRICE();
-      // console.log({ price: price.toNumber() });
-      // const maxSupply = await nftContract.MAX_CHIBI();
-      // console.log({ maxSupply: maxSupply.toNumber() });
-      // setMaxSupply(maxSupply.toNumber());
-
-      // setPrice(price.toNumber());
-      // setTotalSupply(totalSupply.toNumber());
+      setTotalSupply(totalSupply.toNumber());
+      setFreeMintReserve(freeMintReserve.toNumber());
 
       setConnecting(false);
     } catch (e) {
       console.log({ e });
 
-      openNotification(e?.code ?? 'Error', e?.error?.message ?? e?.message);
+      const originalError = e?.error?.data?.originalError;
+      let msg;
+
+      if (originalError) {
+        msg = Errors?.[originalError?.data] ?? originalError?.message;
+      }
+
+      openNotification(
+        e?.code ?? 'Error',
+        msg ?? e?.error?.message ?? e?.message,
+      );
+    }
+  };
+
+  const mint = async () => {
+    setMinting(true);
+    try {
+      const freeMintReserve = await nftContract.freeMintReserve();
+      setFreeMintReserve(freeMintReserve.toNumber());
+
+      if (freeMintReserve.toNumber() !== 0) {
+        // console.log({ freeMintReserve: freeMintReserve.toNumber() });
+        // if (amount > freeMintReserve.toNumber() - freeMintReserve.toNumber()) {
+        //   throw new Error(
+        //     `Free Mint Reserve : ${freeMintReserve.toLocaleString()}/${maxFreeMintReserve.toLocaleString()}`,
+        //   );
+        // }
+
+        await nftContract.freeMint(amount);
+
+        await sleep(10000);
+
+        const totalSupply = await nftContract.totalSupply();
+        setTotalSupply(totalSupply.toNumber());
+
+        const freeMintReserve = await nftContract.freeMintReserve();
+        setFreeMintReserve(freeMintReserve.toNumber());
+
+        setMinting(false);
+        setIsMinted(true);
+
+        return;
+      }
+
+      const each = BigNumber.from(price);
+
+      const options = { value: each.mul(amount).toString() };
+
+      await nftContract.mint(amount, options);
+      await sleep(10000);
+
+      const totalSupply = await nftContract.totalSupply();
+      setTotalSupply(totalSupply.toNumber());
+      setMinting(false);
+      setIsMinted(true);
+    } catch (e) {
+      console.error({ e });
+      setMinting(false);
+      const originalError = e?.error?.data?.originalError;
+      let msg;
+
+      if (originalError) {
+        msg = Errors?.[originalError?.data] ?? originalError?.message;
+      }
+
+      openNotification(
+        e?.code ?? 'Error',
+        msg ?? e?.error?.message ?? e?.message,
+      );
+    }
+  };
+
+  const minted = async () => {
+    setConnecting(true);
+    try {
+      const freeMintReserve = await nftContract.freeMintReserve();
+      setFreeMintReserve(freeMintReserve.toNumber());
+      const totalSupply = await nftContract.totalSupply();
+      setTotalSupply(totalSupply.toNumber());
+      setConnecting(false);
+      setIsMinted(false);
+    } catch (e) {
+      console.error({ e });
+      setConnecting(false);
+
+      const originalError = e?.error?.data?.originalError;
+      let msg;
+
+      if (originalError) {
+        msg = Errors?.[originalError?.data] ?? originalError?.message;
+      }
+
+      openNotification(
+        e?.code ?? 'Error',
+        msg ?? e?.error?.message ?? e?.message,
+      );
     }
   };
 
@@ -458,11 +666,12 @@ export default function BAM() {
         connecting={connecting}
         price={price}
         web3={web3}
-        // claimable={isClaimable}
         totalSupply={totalSupply}
+        freeMintReserve={freeMintReserve}
         maxSupply={maxSupply}
-        // onClaim={claim}
-        // onMint={mint}
+        maxFreeMintReserve={maxFreeMintReserve}
+        onMint={mint}
+        onMinted={minted}
         minting={minting}
         isMinted={isMinted}
         setIsMinted={setIsMinted}
