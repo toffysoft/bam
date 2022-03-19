@@ -29,7 +29,7 @@ async function main() {
    */
   const rateLimiter = new Bottleneck({
     maxConcurrent: 1,
-    minTime: 3000, // Once every 3 seconds
+    minTime: 1000, // Once every 1 seconds
   });
 
   /**
