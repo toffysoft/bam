@@ -23,7 +23,11 @@ const NavBar = () => {
             </a>
           </div>
           <div className="social-icons col-sm-3 col-4">
-            <a href="/" target="_blank" rel="noreferrer">
+            <a
+              href="https://opensea.io/collection/bam-nft"
+              target="_blank"
+              rel="noreferrer"
+            >
               <img alt="opensea" src="/images/opensea.png" />
             </a>
           </div>
